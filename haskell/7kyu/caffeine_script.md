@@ -1,6 +1,6 @@
-7kyu Cafeine Script
+# 7kyu Cafeine Script
 
-Description:
+## Description:
 
 Complete the function caffeineBuzz, which takes a non-zero integer as it's one argument.
 
@@ -12,7 +12,9 @@ If the integer is one of the above and is even, add "Script" to the end of the s
 
 Otherwise, return the string "mocha_missing!"
 
+```
 caffeineBuzz  1   => "mocha_missing!"
 caffeineBuzz  3   => "Java"
 caffeineBuzz  6   => "JavaScript"
 caffeineBuzz 12   => "CoffeeScript"
+```
