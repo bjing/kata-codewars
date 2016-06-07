@@ -49,13 +49,12 @@ normaliseCoeffPre :: [Char] -> [Char]
 normaliseCoeffPre c
   | c == "-" = "-1"
   | c == "+" || c == "" = "1"
+  | c == "+0" || c == "-0" = "0"
   | isPrefixOf "+" c && length c > 1 = drop 1 c
   | otherwise = c
 -- Normalise strings after processing
 normaliseCoeffPost s
---  | isPrefixOf "-1" s = "-" ++ (drop 2 s)
   | (extractCoeff s) == "-1" = "-" ++ (extractBase s)
---  | isPrefixOf "1" s = "+" ++ (tail s)
   | (extractCoeff s) == "1" = "+" ++ (extractBase s)
   | not $ isPrefixOf "-" s = "+" ++ s
   | otherwise = s
@@ -80,6 +79,7 @@ sample4 = "-abc+3a+2ac"
 sample5 = "xyz-xz"
 sample6 = "-abc+3a+2ac"
 sample7 = "4y-8dy+14dyz-24dyz"
+sample8 = "-3dyz+4y-8dy+14dyz-24dyz-3y-y"
 
 
 -- Notes
