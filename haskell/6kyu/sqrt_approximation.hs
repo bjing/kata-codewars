@@ -11,4 +11,4 @@ getSqrt :: Integral n => n -> [n] -> (n, n)
 getSqrt n (x:xs)
   | x^2 == n = (x, x)
   | x^2 > n = (x-1, x)
-  | otherwise getSqrt n xs
+  | otherwise = getSqrt n xs
