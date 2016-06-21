@@ -9,14 +9,15 @@ type Point = (Rational, Rational)
 onLine :: [Point] -> Bool
 onLine ps
   | length uniqps <= 1 = True
-  | otherwise = (==1) $ length $ dedup $ map calculateSlope (pairCombinations uniqps)
+  | otherwise = (==1) $ length $ dedup $ map calculateSlope (pair uniqps)
   where uniqps = dedup ps
 
 dedup :: Ord a => [a] -> [a]
 dedup = toList . fromList
 
-pairCombinations :: [a] -> [[a]]
-pairCombinations = filter ((==2) . length) . subsequences
+pair :: [a] -> [[a]]
+pair (x:y:[]) = [[x, y]]
+pair (x:y:xs) = [x, y]:(pair (y:xs))
 
 calculateSlope :: (Eq a, Num a, Fractional a) => [(a, a)] -> a
 calculateSlope [(a, b), (c, d)]
