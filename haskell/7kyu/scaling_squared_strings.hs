@@ -2,9 +2,11 @@ module Codewars.G964.Scalesqstrings where
 import Data.List
 import Data.List.Split
 
-scale :: [Char] -> Int -> Int -> [Char]
+scale :: String -> Int -> Int -> String
 scale strng k n = (scaleVert n . scaleHon k) strng
 
-scaleHon n = concatMap (take n . repeat)
+scaleHon :: Int -> [a] -> [a]
+scaleHon = concatMap . replicate
 
-scaleVert n = intercalate "\n" . filter (/="") . scaleHon n . splitOn "\n"
+scaleVert :: Int -> String -> String
+scaleVert n = intercalate "\n" . filter (/="") . scaleHon n. splitOn "\n"
