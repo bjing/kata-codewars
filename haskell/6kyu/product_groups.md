@@ -1,18 +1,18 @@
 # Description
 
-A [group](https://en.wikipedia.org/wiki/Group_(mathematics) is a [monoid](https://hackage.haskell.org/package/base-4.2.0.1/docs/Data-Monoid.html) plus a function, invert, with the following signature:
+A [group](https://en.wikipedia.org/wiki/Group_(mathematics) is a [monoid](https://hackage.haskell.org/package/base-4.2.0.1/docs/Data-Monoid.html) plus a function, `invert`, with the following signature:
 ```
 class Monoid m => Group m where
   invert :: m -> m
 ```
-A group obeys all of the rules of a Monoid (ie. [associativity](https://en.wikipedia.org/wiki/Associative_property) and [identity](https://en.wikipedia.org/wiki/Identity_element)), as well as invertibility:
+A group obeys all of the rules of a Monoid (ie. [associativity](https://en.wikipedia.org/wiki/Associative_property) and [identity](https://en.wikipedia.org/wiki/Identity_element)), as well as *invertibility*:
 ```
 a <> invert a == mempty
 invert a <> a == mempty
 ```
 Where ``(<>)`` is the binary monoid operator from Data.Monoid.
 
-The [category](https://en.wikipedia.org/wiki/Category_theory) of groups (aka Grp) is known to be closed under products.
+The [category](https://en.wikipedia.org/wiki/Category_theory) of groups (aka *Grp*) is known to be closed under products.
 
 To show this,
 
