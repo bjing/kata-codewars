@@ -1,4 +1,5 @@
 module Codewars.Kirilloid.MultilinearPolynomials where
+
 import Data.List
 import Data.List.Split
 import Data.Char
@@ -90,12 +91,12 @@ stringToInt s = (read s) :: Int
 ----------------
 -- Sample input
 ----------------
-sample = "2abc-bc-abc"
-sample1 = "dc+dcba"
-sample2 = "2xy-yx"
-sample3 = "-a+5ab+3a-c-2a"
-sample4 = "-abc+3a+2ac"
-sample5 = "xyz-xz"
-sample6 = "-abc+3a+2ac"
-sample7 = "4y-8dy+14dyz-24dyz"
-sample8 = "-3dyz+4y-8dy+14dyz-24dyz-3y-y"
+--sample = "2abc-bc-abc"
+--sample1 = "dc+dcba"
+--sample2 = "2xy-yx"
+--sample3 = "-a+5ab+3a-c-2a"
+--sample4 = "-abc+3a+2ac"
+--sample5 = "xyz-xz"
+--sample6 = "-abc+3a+2ac"
+--sample7 = "4y-8dy+14dyz-24dyz"
+--sample8 = "-3dyz+4y-8dy+14dyz-24dyz-3y-y"
