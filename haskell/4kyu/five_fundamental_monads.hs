@@ -16,27 +16,29 @@ data Maybe a = Nothing | Just a
 
 data State s a = State {runState :: s -> (a, s)}
 
-data Reader s a = Reader {runReader :: s -> a }
+data Reader r a = Reader {runReader :: r -> a }
 
-data Writer w a = Writer {runWriter :: (w, a)}
+data Writer w a = Writer {runWriter :: (a, w)}
 
 instance Monad Identity where
-  return = undefined
-  (Identity v) >>= f = undefined
+  return x = Identity x
+  (Identity v) >>= f = f v
 
 instance Monad Maybe where
-  return = undefined
-  Nothing >>= f = undefined
-  (Just v) >>= f = undefined
+  return x = Just x
+  Nothing >>= f = Nothing
+  (Just v) >>= f = f v
 
 instance Monad (State s) where
-  return = undefined
-  (State g) >>= f = undefined
+  return x = State $ \s -> (x, s)
+  (State g) >>= f = State $ \s -> let (a, s') = g s
+                                  in  runState (f a) s'
 
 instance Monad (Reader s) where
-  return = undefined
-  (Reader g) >>= f = undefined
+  return x = Reader $ const x
+  (Reader g) >>= f = Reader $ \w -> runReader (f (Reader g) w) w
 
 instance Monoid w => Monad (Writer w) where
-  return = undefined
-  (Writer (s, v)) >>= f = undefined
+  return x = Writer (x, mempty)
+  (Writer (x, v)) >>= f = let (Writer (y, v')) = f x
+                          in Writer(y, v `mappend` v')
