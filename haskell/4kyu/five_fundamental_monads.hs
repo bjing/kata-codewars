@@ -35,8 +35,8 @@ instance Monad (State s) where
                                   in  runState (f a) s'
 
 instance Monad (Reader s) where
-  return x = Reader $ const x
-  (Reader g) >>= f = Reader $ \w -> runReader (f (Reader g) w) w
+  return = Reader . const
+  (Reader g) >>= f = Reader $ \r -> runReader (f $ runReader (Reader g) r) r
 
 instance Monoid w => Monad (Writer w) where
   return x = Writer (x, mempty)
