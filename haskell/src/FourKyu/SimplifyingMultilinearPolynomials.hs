@@ -2,6 +2,7 @@ module FourKyu.SimplifyingMultilinearPolynomials where
 
 import Data.List
 import Data.List.Split
+import qualified Data.Map as M
 import Data.Char
 import Data.Ord (comparing)
 import GHC.Exts
@@ -11,7 +12,7 @@ simplify = combineIt . transformIt . splitIt
 
 -- Split polynomials
 splitIt :: String -> [String]
-splitIt = map sort . filter (not. null) . split (keepDelimsL $ oneOf "+-")
+splitIt = filter (not. null) . split (keepDelimsL $ oneOf "+-")
 
 -- Combine transformed split polynomials terms back together
 combineIt :: [String] -> String
@@ -41,13 +42,19 @@ separateCoeffs = (map unzip . groupWith snd) . map separateCoeffForTerm
 separateCoeffForTerm :: String -> (String, String)
 separateCoeffForTerm s = ((normaliseCoeffPre . extractCoeff) s, extractBase s)
 
+sumCoeffs :: [([String], [String])] -> [(String, Int)]
+sumCoeffs = M.toList . sumCoeffs' . M.fromListWith (++) . groupCoeffs
+
+groupCoeffs :: [([String], [String])] -> [(String, [String])]
+groupCoeffs = map (\(xs, h:_) -> (sort h, xs))
+
 -- Sum coefficients for each group
-sumCoeffs :: [([String], [String])] -> [(Int, String)]
-sumCoeffs = map (\(c, n) -> (sum(map stringToInt c), head n))
+sumCoeffs' :: M.Map String [String] -> M.Map String Int
+sumCoeffs' = M.map (sum . map stringToInt)
 
 -- Combine coeffs and indeterminates
-reconTerms :: [(Int, String)] -> [String]
-reconTerms = map (\(i, n) -> normaliseCoeffPost (intToString i ++ n))
+reconTerms :: [(String, Int)] -> [String]
+reconTerms = map (\(n, i) -> normaliseCoeffPost (intToString i ++ n))
 
 -- Remove terms with 0 coefficients
 removeZeroTerms :: [String] -> [String]
@@ -78,9 +85,9 @@ normaliseCoeffPost s
   | not $ isPrefixOf "-" s = "+" ++ s
   | otherwise = s
 
--- Sort list of tuples of (String, String) given length of the second string
-tupleSort :: [(Int, String)] -> [(Int, String)]
-tupleSort = sortBy (comparing $ length . snd)
+-- Sort list of tuples of (Int, String) given length of the second string
+tupleSort :: [(String, Int)] -> [(String, Int)]
+tupleSort = sortBy (comparing $ length . fst)
 
 -- String and Int conversions
 intToString :: Int -> String
