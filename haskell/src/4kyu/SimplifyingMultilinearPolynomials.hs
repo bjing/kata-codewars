@@ -1,4 +1,4 @@
-module Codewars.Kirilloid.MultilinearPolynomials where
+module SimplifyingMultilinearPolynomials where
 
 import Data.List
 import Data.List.Split
