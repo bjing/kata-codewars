@@ -11,11 +11,11 @@ simplify = combineIt . transformIt . splitIt
 
 -- Split polynomials
 splitIt :: String -> [String]
-splitIt = (map sort) . (filter (\e -> length e /= 0)) . split (keepDelimsL $ oneOf "+-")
+splitIt = map sort . filter (not. null) . split (keepDelimsL $ oneOf "+-")
 
 -- Combine transformed split polynomials terms back together
 combineIt :: [String] -> String
-combineIt = removeLeadingPlus . (foldl (++) "")
+combineIt = removeLeadingPlus . foldl (++) ""
 
 -- Add up coefficients for elements with the same indeterminates
 transformIt :: [String] -> [String]
@@ -29,13 +29,13 @@ transformIt = removeZeroTerms . reconTerms . tupleSort . sumCoeffs . separateCoe
 -- Remove leading + sign for processed polynomial string
 removeLeadingPlus :: String -> String
 removeLeadingPlus s
-  | isPrefixOf "+" s = tail s
+  | "+" `isPrefixOf` s = tail s
   | otherwise = s
 
 -- Separate coefficient from each term and store coeff and indeterminate in a tuple
 -- Also group all elements that have the same indeterinates
 separateCoeffs :: [String] -> [([String], [String])]
-separateCoeffs = (map unzip . groupWith (\(c, n) -> n)) . (map separateCoeffForTerm)
+separateCoeffs = (map unzip . groupWith snd) . map separateCoeffForTerm
 
 -- Separate coefficient from indeterinate for a single term
 separateCoeffForTerm :: String -> (String, String)
@@ -43,7 +43,7 @@ separateCoeffForTerm s = ((normaliseCoeffPre . extractCoeff) s, extractBase s)
 
 -- Sum coefficients for each group
 sumCoeffs :: [([String], [String])] -> [(Int, String)]
-sumCoeffs = map (\(c, n) -> (sum(map stringToInt c), (head n)))
+sumCoeffs = map (\(c, n) -> (sum(map stringToInt c), head n))
 
 -- Combine coeffs and indeterminates
 reconTerms :: [(Int, String)] -> [String]
@@ -51,7 +51,7 @@ reconTerms = map (\(i, n) -> normaliseCoeffPost (intToString i ++ n))
 
 -- Remove terms with 0 coefficients
 removeZeroTerms :: [String] -> [String]
-removeZeroTerms = filter (\t -> not $ isPrefixOf "+0" t)
+removeZeroTerms = filter (not . isPrefixOf "+0")
 
 -- Extract coefficient from an element
 extractCoeff :: String -> String
@@ -73,8 +73,8 @@ normaliseCoeffPre c
 -- Normalise strings after processing
 normaliseCoeffPost :: String -> String
 normaliseCoeffPost s
-  | (extractCoeff s) == "-1" = "-" ++ (extractBase s)
-  | (extractCoeff s) == "1" = "+" ++ (extractBase s)
+  | extractCoeff s == "-1" = "-" ++ extractBase s
+  | extractCoeff s == "1" = "+" ++ extractBase s
   | not $ isPrefixOf "-" s = "+" ++ s
   | otherwise = s
 
@@ -84,9 +84,9 @@ tupleSort = sortBy (comparing $ length . snd)
 
 -- String and Int conversions
 intToString :: Int -> String
-intToString i = show i
+intToString = show
 stringToInt :: String -> Int
-stringToInt s = (read s) :: Int
+stringToInt s = read s :: Int
 
 ----------------
 -- Sample input
