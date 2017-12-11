@@ -1,12 +1,13 @@
-module SimplifyingMultilinearPolynomialsSpec where
+module FourKyu.SimplifyingMultilinearPolynomialsSpec where
 
-import SimplifyingMultilinearPolynomials (simplify)
+import FourKyu.SimplifyingMultilinearPolynomials (simplify)
 
 import Test.Hspec
 import Test.QuickCheck
 import Test.Hspec.QuickCheck
 
-main = hspec $
+spec :: Spec
+spec =
   describe "Sample tests" $ do
     it "Test reduction by equivalence" $ do
       simplify "dc+dcba" `shouldBe` "cd+abcd"

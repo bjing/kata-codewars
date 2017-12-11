@@ -1,4 +1,4 @@
-module SimplifyingMultilinearPolynomials where
+module FourKyu.SimplifyingMultilinearPolynomials where
 
 import Data.List
 import Data.List.Split
