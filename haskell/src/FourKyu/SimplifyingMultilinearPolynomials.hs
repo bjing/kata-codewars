@@ -15,7 +15,7 @@ splitIt = map sort . filter (not. null) . split (keepDelimsL $ oneOf "+-")
 
 -- Combine transformed split polynomials terms back together
 combineIt :: [String] -> String
-combineIt = removeLeadingPlus . foldl (++) ""
+combineIt = removeLeadingPlus . concat
 
 -- Add up coefficients for elements with the same indeterminates
 transformIt :: [String] -> [String]

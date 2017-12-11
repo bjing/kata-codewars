@@ -1,13 +1,13 @@
 module FourKyu.SimplifyingMultilinearPolynomialsSpec where
 
-import FourKyu.SimplifyingMultilinearPolynomials (simplify)
+import FourKyu.SimplifyingMultilinearPolynomials
 
 import Test.Hspec
 import Test.QuickCheck
 import Test.Hspec.QuickCheck
 
 spec :: Spec
-spec =
+spec = do
   describe "Sample tests" $ do
     it "Test reduction by equivalence" $ do
       simplify "dc+dcba" `shouldBe` "cd+abcd"
@@ -22,3 +22,7 @@ spec =
     it "Test no leading +" $ do
       simplify "-y+x" `shouldBe` "x-y"
       simplify "y-x" `shouldBe` "-x+y"
+
+  describe "Split" $
+    it "should " $
+      splitIt "-12dy+9yzd-9dyz-13y+8y-10yzd-11yd+15yd+9y" `shouldBe` ["-12dy","+9dyz","-9dyz","-13y","+8y","-10dyz","-11dy","+15dy","+9y"]
