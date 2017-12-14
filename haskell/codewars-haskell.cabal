@@ -35,6 +35,7 @@ library
   exposed-modules:
       Lib
     , FourKyu.SimplifyingMultilinearPolynomials
+    , SixKyu.StopSpinningMyWords
   default-language: Haskell2010
 
 executable codewars-haskell-exe
@@ -61,4 +62,5 @@ test-suite codewars-haskell-test
     , QuickCheck
   other-modules:
       FourKyu.SimplifyingMultilinearPolynomialsSpec
+    , SixKyu.StopSpinningMyWordsSpec
   default-language: Haskell2010
