@@ -1,8 +1,9 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 module Monads where
 
-import Prelude hiding (Monad, Identity, Maybe(..), State, Reader, Writer)
-import Data.Monoid
+import           Data.Monoid
+import           Prelude     hiding (Identity, Maybe (..), Monad, Reader, State,
+                              Writer)
 
 class Monad m where
   return :: a -> m a
@@ -21,11 +22,11 @@ data Reader r a = Reader {runReader :: r -> a }
 data Writer w a = Writer {runWriter :: (a, w)}
 
 instance Monad Identity where
-  return x = Identity x
+  return = Identity
   (Identity v) >>= f = f v
 
 instance Monad Maybe where
-  return x = Just x
+  return = Just
   Nothing >>= f = Nothing
   (Just v) >>= f = f v
 

@@ -1,11 +1,11 @@
 module FourKyu.SimplifyingMultilinearPolynomials where
 
-import Data.List
-import Data.List.Split
-import qualified Data.Map as M
-import Data.Char
-import Data.Ord (comparing)
-import GHC.Exts
+import           Data.Char
+import           Data.List
+import           Data.List.Split
+import qualified Data.Map        as M
+import           Data.Ord        (comparing)
+import           GHC.Exts
 
 simplify :: String -> String
 simplify = combineIt . transformIt . splitIt
@@ -94,6 +94,7 @@ intToString :: Int -> String
 intToString = show
 stringToInt :: String -> Int
 stringToInt s = read s :: Int
+
 
 ----------------
 -- Sample input
